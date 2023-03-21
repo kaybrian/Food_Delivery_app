@@ -53,7 +53,7 @@ const HomeScreen = () => {
             </View>
 
             {/* scrooll view  */}
-            <ScrollView>
+            <ScrollView className="bg-gray-100">
                 {/* categroes */}
                 <Categories />
 
