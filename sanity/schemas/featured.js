@@ -18,7 +18,7 @@ export default defineType({
       validation:(Rule) => Rule.max(200),
     },
     {
-      name:"resturant",
+      name:"resturants",
       type:"array",
       title:"Resturants",
       of: [{ type:"reference", to: [{ type:"resturant"}] }],

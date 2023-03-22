@@ -6,9 +6,9 @@ import featured from './featured'
 
 
 export const schemaTypes = [
+    featured,
     resturant,
     dish,
     category,
-    featured,
 ]
 

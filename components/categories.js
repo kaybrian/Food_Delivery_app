@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView } from "react-native";
 import CategoryCard from "./CategoryCard";
+import SanityClient from "../sanity";
+import "react-native-url-polyfill/auto";
+import { urlFor } from "../sanity";
+
 
 const Categories = () => {
+  const [Categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    SanityClient.fetch(
+      `
+    *[_type == "category"]
+    `
+    ).then((data) => {
+      setCategories(data);
+    });
+  });
   return (
     <ScrollView
       contentContainerStyles={{
@@ -13,30 +28,15 @@ const Categories = () => {
       horizontal
       showsHorizontalScrollIndicator={false}
     >
-      <CategoryCard
-        imgUrl="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
-        title="Testing1"
-      />
-      <CategoryCard
-        imgUrl="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
-        title="Testing2"
-      />
-      <CategoryCard
-        imgUrl="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
-        title="Testing3"
-      />
-      <CategoryCard
-        imgUrl="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
-        title="Testing3"
-      />
-      <CategoryCard
-        imgUrl="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
-        title="Testing3"
-      />
-      <CategoryCard
-        imgUrl="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
-        title="Testing3"
-      />
+      {Categories.map((category) => (
+        <CategoryCard
+          key={category._id}
+          imgUrl = {urlFor(category.image).width(200).url()}
+          title={category.name}
+        />
+      ))
+      }
+
     </ScrollView>
   );
 };

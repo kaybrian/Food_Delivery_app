@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import { ArrowRightIcon } from "react-native-heroicons/outline";
 import ResturantCard from "./ResturantCards";
+import SanityClient from '../sanity'
+import 'react-native-url-polyfill/auto'
 
 
 const FeaturedRows = ({ id, title, description }) => {
+    const [resturant, setResturant] = useState([])
+    useEffect(() => {
+        SanityClient.fetch(`
+        *[_type == "featured" && _id == $id] {
+            ...,
+            resturant[]-> {
+                ...,
+                dishes[] ->,
+                  type -> {
+                  name
+                  }
+            }
+        }[0]
+        `, { id: id }
+        ).then(data => {
+            setResturant(data?.resturant)
+        })
+    }, [id])
+
+    console.log(resturant)
     return (
         <View className="">
             <View className="mt-4 flex-row items-center justify-between px-4">
-                <Text className="text-bold text-lg">{title}</Text>
+                <Text className="text-bold text-black text-lg">{title}</Text>
                 <ArrowRightIcon color="#00CC88" />
             </View>
             <Text className="text-xs text-gray-500 px-4">{description}</Text>
@@ -23,54 +45,24 @@ const FeaturedRows = ({ id, title, description }) => {
                 className="pt-4"
             >
                 {/* Resturnat cards */}
-                <ResturantCard
-                    id={1234}
-                    imgUrl="https://images.unsplash.com/photo-1535850452425-140ee4a8dbae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdHVyYW50c3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                    title="African Hotel"
-                    rating={2}
-                    genre="Ugandan"
-                    address="Kigali"
-                    short_description="We are the best at thing called cooking"
-                    dishes={[]}
-                    long={20}
-                    lat={23.43}
-                />
-                <ResturantCard
-                    id={1234}
-                    imgUrl="https://images.unsplash.com/photo-1535850452425-140ee4a8dbae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdHVyYW50c3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                    title="African Hotel"
-                    rating={2}
-                    genre="Ugandan"
-                    address="Kigali"
-                    short_description="We are the best at thing called cooking"
-                    dishes={[]}
-                    long={20}
-                    lat={23.43}
-                />
-                <ResturantCard
-                    id={1234}
-                    imgUrl="https://images.unsplash.com/photo-1535850452425-140ee4a8dbae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdHVyYW50c3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                    title="African Hotel"
-                    rating={2}
-                    genre="Ugandan"
-                    address="Kigali"
-                    short_description="We are the best at thing called cooking"
-                    dishes={[]}
-                    long={20}
-                    lat={23.43}
-                />
-                <ResturantCard
-                    id={1234}
-                    imgUrl="https://images.unsplash.com/photo-1535850452425-140ee4a8dbae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdHVyYW50c3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                    title="African Hotel"
-                    rating={2}
-                    genre="Ugandan"
-                    address="Kigali"
-                    short_description="We are the best at thing called cooking"
-                    dishes={[]}
-                    long={20}
-                    lat={23.43}
-                />
+
+                {
+                    resturant.map(resturant => (
+                        <ResturantCard
+                        key={resturant._id}
+                            id={resturant._id}
+                            imgUrl={resturant.image}
+                            title={resturant.name}
+                            rating={resturant.rating}
+                            genre={resturant.type.name}
+                            address={resturant.address}
+                            short_description={resturant.short_description}
+                            dishes={[]}
+                            long={resturant.lat}
+                            lat={resturant.long}
+                        />
+                    ))
+                }
 
 
             </ScrollView>
