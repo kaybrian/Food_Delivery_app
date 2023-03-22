@@ -15,7 +15,7 @@ export default defineType({
       name: "short_description",
       type: "string",
       title: "short Description of the Resturant",
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.max(200),
     },
     {
       name: "image",
@@ -64,4 +64,4 @@ export default defineType({
 
     }
   ]
-})
+});

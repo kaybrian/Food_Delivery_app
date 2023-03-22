@@ -1,12 +1,30 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, Image, TextInput, ScrollView } from 'react-native'
 import { ChevronDownIcon, UserIcon } from "react-native-heroicons/outline";
 import Categories from '../components/categories'
 import FeaturedRows from '../components/FeaturedRows';
+import SanityClient from '../sanity'
+import 'react-native-url-polyfill/auto'
 
 const HomeScreen = () => {
     const navigation = useNavigation();
+    const [featiuredCategories, setFeaturedCategories] = useState([])
+
+    useEffect(() => {
+        SanityClient.fetch(`
+        *[_type == "featured"] {
+            ...,
+            resturants[]-> {
+                ...,
+                dishes[] ->
+            }
+        }
+        `).then(data => setFeaturedCategories(data))
+
+    }, [])
+
+    console.log(featiuredCategories)
 
     useLayoutEffect(() => {
         navigation.setOptions({
