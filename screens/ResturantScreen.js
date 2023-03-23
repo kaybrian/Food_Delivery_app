@@ -1,12 +1,15 @@
 import { useNavigation, useRoute } from '@react-navigation/native'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
 import { urlFor } from '../sanity';
 import { ArrowLeftIcon, StarIcon, MapPinIcon, QuestionMarkCircleIcon, ChevronRightIcon } from 'react-native-heroicons/solid';
+import Dishrow from '../components/Dishrow';
 
 
 const ResturantScreen = () => {
+
     const navigation = useNavigation();
+
     const { params: {
         id,
         imgUrl,
@@ -75,19 +78,37 @@ const ResturantScreen = () => {
                     <Text className="text-gray-500 mt-2 pb-4">{short_description}</Text>
                 </View>
 
-                <TouchableOpacity className="flex-row flex-1 space-x-2 items-center p-4 border-gray-300">
+                <TouchableOpacity className="flex-row flex-1 space-x-2 items-center p-4 border-y border-gray-300">
                     <QuestionMarkCircleIcon
                         color="gray"
                         opacity={0.5}
                         size={22}
                     />
                     <Text className="pl-2 flex-1 text-sm font-bold">Have a food allergy? </Text>
-                    <ChevronRightIcon color="#00CC88"/>
+                    <ChevronRightIcon color="#00CC88" />
                 </TouchableOpacity>
             </View>
 
             <View>
-                
+                <Text className="px-4 pt-6 mb-3 font-bold text-xl">
+                    Menu
+                </Text>
+
+                    {/* work on the dishes you have  */}
+                    {
+                        dishes?.map((dish) => (
+                            <Dishrow
+                                key={dish._id}
+                                id={dish._id}
+                                name={dish.name}
+                                description={dish.short_description}
+                                price={dish.price}
+                                image={dish.image}
+                            />
+                        ))
+                    }
+
+
             </View>
         </ScrollView>
     )
