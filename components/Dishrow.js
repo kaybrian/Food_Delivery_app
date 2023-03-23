@@ -2,11 +2,25 @@ import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React, { useState } from 'react'
 import { urlFor } from '../sanity'
 import { MinusCircleIcon, PlusCircleIcon } from "react-native-heroicons/solid";
+import { useDispatch, useSelector } from 'react-redux';
+import { addtoBaseket, selectBasketItems, selectedBasketItemWithId,removeFromBasket } from '../features/basketSlice';
 
 
 const Dishrow = ({ id, name, description, price, image }) => {
     const [ispressed, setIsPressed] = useState(false)
+    const dispatch = useDispatch();
+    const items = useSelector(state => selectedBasketItemWithId(state, id))
+    console.log(items)
 
+    const addItemtoBasket = () => {
+        dispatch(addtoBaseket({id, name, description, price, image}))
+    }
+
+    const removeItemFromBasket = () => {
+        if (!items.length > 0) return;
+
+        dispatch(removeFromBasket({id}))
+    }
 
     return (
         <>
@@ -39,14 +53,21 @@ const Dishrow = ({ id, name, description, price, image }) => {
                 ispressed && (
                     <View className="bg-white px-4">
                         <View className="flex-row items-center space-x-2 pb-3">
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={removeItemFromBasket}>
                                 {/* color={items.length > 0 ? "#00CC88" : "gray"} */}
                                 <MinusCircleIcon size={40} color="#00CC88" />
                             </TouchableOpacity>
-                            <Text>0</Text>
-                            <TouchableOpacity>
+
+                            <Text>{items.length}</Text>
+
+
+                            <TouchableOpacity onPress={addItemtoBasket}>
                                 {/* color={items.length > 0 ? "#00CC88" : "gray"} */}
-                                <PlusCircleIcon size={40} color="#00CC88" />
+                                <PlusCircleIcon
+
+                                    size={40}
+                                    color="#00CC88"
+                                />
                             </TouchableOpacity>
                         </View>
                     </View>
