@@ -33,7 +33,7 @@ const HomeScreen = () => {
     }, [])
 
     return (
-        <SafeAreaView className="bg-white pt-6 mt-3 mb-10">
+        <SafeAreaView className="bg-white pt-6 mt-3 mb-10 pb-20">
             <View className="flex-row pb-3 items-center mx-4 space-x-2 px-1">
                 <Image
                     source={{
@@ -71,7 +71,7 @@ const HomeScreen = () => {
             </View>
 
             {/* scrooll view  */}
-            <ScrollView className="bg-gray-100">
+            <ScrollView className="bg-gray-100 pb-36 mb-10">
                 {/* categroes */}
                 <Categories />
 

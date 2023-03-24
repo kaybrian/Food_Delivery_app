@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image,Button } from 'react-native'
 import React, { useState } from 'react'
 import { urlFor } from '../sanity'
 import { MinusCircleIcon, PlusCircleIcon } from "react-native-heroicons/solid";
@@ -10,7 +10,7 @@ const Dishrow = ({ id, name, description, price, image }) => {
     const [ispressed, setIsPressed] = useState(false)
     const dispatch = useDispatch();
     const items = useSelector(state => selectedBasketItemWithId(state, id))
-    console.log(items)
+    // console.log(items)
 
     const addItemtoBasket = () => {
         dispatch(addtoBaseket({id, name, description, price, image}))
@@ -18,7 +18,6 @@ const Dishrow = ({ id, name, description, price, image }) => {
 
     const removeItemFromBasket = () => {
         if (!items.length > 0) return;
-
         dispatch(removeFromBasket({id}))
     }
 
@@ -54,8 +53,8 @@ const Dishrow = ({ id, name, description, price, image }) => {
                     <View className="bg-white px-4">
                         <View className="flex-row items-center space-x-2 pb-3">
                             <TouchableOpacity onPress={removeItemFromBasket}>
-                                {/* color={items.length > 0 ? "#00CC88" : "gray"} */}
-                                <MinusCircleIcon size={40} color="#00CC88" />
+                                {/* */}
+                                <MinusCircleIcon disabled={items.length} size={40} color={items.length > 0 ? "#00CC88" : "gray"}  />
                             </TouchableOpacity>
 
                             <Text>{items.length}</Text>

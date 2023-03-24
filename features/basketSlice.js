@@ -35,4 +35,5 @@ export const selectBasketItems = state => state.basket.items
 export const selectedBasketItemWithId = (state, id) => state.basket.items.filter(
     (item) => item.id === id);
 
+export const selectTotal = (state) => state.basket.items.reduce((total, item) => total += item.price, 0)
 export default basketSlice.reducer
