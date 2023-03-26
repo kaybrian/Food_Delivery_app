@@ -18,7 +18,10 @@ const BasketScreen = () => {
             (results[item.id] = results[item.id] || [] ).push(item)
             return results
         })
-    },[items])
+        setgroupedItemsinBasket(groupedItems);
+    },[items]);
+
+    console.log(groupedItemsinBasket);
   return (
     <View>
       <Text>BasketScreen</Text>
