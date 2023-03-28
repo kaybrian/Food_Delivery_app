@@ -24,7 +24,7 @@ const BasketScreen = () => {
 
 
   // console.log(items)
-  console.log(resturant);
+  // console.log(resturant);
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="flex-1 bg-gray-100">
