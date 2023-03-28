@@ -38,7 +38,7 @@ const ResturantScreen = () => {
             short_description,
             dishes,
             long,
-            lat
+            lat,
         }))
     }, [dispatch])
 

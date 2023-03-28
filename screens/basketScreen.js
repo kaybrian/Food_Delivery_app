@@ -14,13 +14,15 @@ const BasketScreen = () => {
     const [groupedItemsinBasket, setgroupedItemsinBasket] = useState([])
 
     useMemo(() => {
-        const groupedItems = items.reduce((results, item) =>{
-            (results[item.id] = results[item.id] || [] ).push(item)
+        const groupedItems = items.reduce((results, item) => {
+            (results[item.id] = results[item.id] || [] ).push(item);
             return results
-        })
+        },{});
         setgroupedItemsinBasket(groupedItems);
     },[items]);
 
+
+    // console.log(items)
     console.log(groupedItemsinBasket);
   return (
     <View>

@@ -34,6 +34,8 @@ const HomeScreen = () => {
 
     return (
         <SafeAreaView className="bg-white pt-6 mt-3 mb-10 pb-20">
+
+            {/* first searach here  */}
             <View className="flex-row pb-3 items-center mx-4 space-x-2 px-1">
                 <Image
                     source={{
@@ -57,6 +59,10 @@ const HomeScreen = () => {
 
                 <UserIcon size={35} color="#00CC88" />
             </View>
+
+            {/* search two here  */}
+
+
             <View className="flex-row items-center space-2 pb-2 mx-4 px-1">
                 <View className="flex-row flex-1 space-x-2 bg-gray-200">
                     <ServerIcon color="gray" size={35} className="" />
@@ -70,23 +76,23 @@ const HomeScreen = () => {
                 <ChevronDownIcon color="#00CC88" />
             </View>
 
-            {/* scrooll view  */}
+            {/* last scrol search here  */}
             <ScrollView className="bg-gray-100 pb-36 mb-10">
-                {/* categroes */}
-                <Categories />
+                    {/* categroes */}
+                    <Categories />
 
-                {/* featured rows  */}
-                {featiuredCategories?.map(category => (
+                    {/* featured rows  */}
+                    {featiuredCategories?.map(category => (
                         <FeaturedRows
                             key={category._id}
                             id={category._id}
                             title={category.name}
                             description={category.short_description}
                         />
-                    ))}
+                        ))
+                    }
+                </ScrollView>
 
-
-            </ScrollView>
         </SafeAreaView>
     )
 }
