@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectResturant } from '../features/ResturantSlice';
-import { removeFromBasket, selectBasketItems,selectTotal } from '../features/basketSlice';
+import { removeFromBasket, selectBasketItems, selectTotal } from '../features/basketSlice';
 import { XCircleIcon } from "react-native-heroicons/outline";
 import { urlFor } from '../sanity';
 
@@ -83,11 +83,29 @@ const BasketScreen = () => {
 
         </ScrollView>
 
-        <View>
-          <View className="flex-row justify-between p-5 bg-white mt-5 space-x-4">
+        <View className="bg-white mt-5 space-y-4 p-5">
+
+          <View className="flex-row justify-between">
             <Text className="text-gray-400">SubTotal</Text>
-            <Text className="text-gray-400">{basketTotal}</Text>
+            <Text className="text-gray-400">RWF - {basketTotal}</Text>
           </View>
+
+          <View className="flex-row justify-between">
+            <Text className="text-gray-400">Delivery Fee</Text>
+            <Text className="text-gray-400">RWF - {2000}</Text>
+          </View>
+
+          <View className="flex-row justify-between">
+            <Text >Order Total</Text>
+            <Text className="font-extrabold">RWF - {basketTotal + 2000}</Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => { navigation.navigate('PreparingOrder') }}
+            className="rounded-lg bg-[#00CC88] p-4">
+            <Text className="text-center text-white text-lg font-extrabold">
+              Place Order
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
