@@ -64,7 +64,7 @@ const HomeScreen = () => {
 
 
             <View className="flex-row items-center space-2 pb-2 mx-4 px-1">
-                <View className="flex-row flex-1 space-x-2 bg-gray-200">
+                <View className="flex-row flex-1 space-x-2 bg-white">
                     <ServerIcon color="gray" size={35} className="" />
                     <TextInput
                         placeholder='Resturants and Cuisines'
